@@ -109,6 +109,33 @@ function LoginForm() {
             </button>
           </form>
 
+          <div className="relative my-8">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-[#E7E5E4]" />
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="bg-white px-3 text-[#A8A29E] uppercase tracking-wider">or</span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              const emailInput = document.getElementById("email") as HTMLInputElement;
+              const passwordInput = document.getElementById("password") as HTMLInputElement;
+              if (emailInput && passwordInput) {
+                emailInput.value = "mathew@freshbatch.com";
+                passwordInput.value = "admin123";
+              }
+            }}
+            className="w-full py-3 px-4 rounded-2xl border border-[#E7E5E4] text-sm font-medium text-[#44403C] hover:bg-[#FAFAF7] hover:border-[#064E3B]/20 transition-all duration-300 flex items-center justify-center gap-2"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-[#059669]">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+            </svg>
+            Admin Login
+          </button>
+
           <p className="text-center text-sm text-[#78716C] mt-8">
             Don&apos;t have an account?{" "}
             <Link
