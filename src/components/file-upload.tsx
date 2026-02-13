@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import { upload } from "@vercel/blob/client";
+import { compressVideo } from "@/lib/compress-video";
 
 interface FileUploadProps {
   accept: "image" | "video";
@@ -14,6 +15,7 @@ export function FileUpload({ accept, currentUrl, onUpload, onRemove }: FileUploa
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
   const [preview, setPreview] = useState<string | null>(currentUrl || null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -30,23 +32,43 @@ export function FileUpload({ accept, currentUrl, onUpload, onRemove }: FileUploa
       setUploading(true);
 
       try {
+        let fileToUpload = file;
+
+        // Compress video before uploading
+        if (accept === "video" && file.size >= 4 * 1024 * 1024) {
+          setStatus("Compressing video...");
+          fileToUpload = await compressVideo(file, {
+            onProgress: (pct) => setStatus(`Compressing video... ${pct}%`),
+          });
+          const savedMB = ((file.size - fileToUpload.size) / (1024 * 1024)).toFixed(1);
+          setStatus(
+            `Compressed: ${(file.size / (1024 * 1024)).toFixed(1)}MB → ${(fileToUpload.size / (1024 * 1024)).toFixed(1)}MB (saved ${savedMB}MB)`
+          );
+          // Brief pause so user can see compression result
+          await new Promise((r) => setTimeout(r, 1000));
+        }
+
+        setStatus("Uploading...");
+
         // Use client-side upload to bypass Vercel's 4.5MB body size limit
-        const blob = await upload(file.name, file, {
+        const blob = await upload(fileToUpload.name, fileToUpload, {
           access: "public",
           handleUploadUrl: "/api/upload/client-token",
         });
 
         setPreview(blob.url);
         onUpload(blob.url);
+        setStatus("");
       } catch (err) {
         const message =
           err instanceof Error ? err.message : "Upload failed";
         setError(message);
+        setStatus("");
       } finally {
         setUploading(false);
       }
     },
-    [onUpload]
+    [accept, onUpload]
   );
 
   const handleDrop = useCallback(
@@ -142,7 +164,7 @@ export function FileUpload({ accept, currentUrl, onUpload, onRemove }: FileUploa
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
-              <span className="text-sm text-gray-600">Uploading...</span>
+              <span className="text-sm text-gray-600">{status || "Processing..."}</span>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-2">
@@ -161,6 +183,7 @@ export function FileUpload({ accept, currentUrl, onUpload, onRemove }: FileUploa
               </div>
               <span className="text-xs text-gray-400">
                 {accept === "image" ? "JPEG, PNG, WebP, GIF" : "MP4, WebM"} up to {maxLabel}
+                {accept === "video" && " (auto-compressed)"}
               </span>
             </div>
           )}
