@@ -78,9 +78,9 @@ body {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(6, 78, 59, 0.82) 0%,
-    rgba(6, 95, 70, 0.75) 40%,
-    rgba(4, 120, 87, 0.80) 100%
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.35) 50%,
+    rgba(0, 0, 0, 0.50) 100%
   );
   z-index: 1;
 }
