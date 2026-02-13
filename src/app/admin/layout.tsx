@@ -14,9 +14,9 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)]">
+    <div className="flex min-h-screen pt-16">
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 hidden lg:block">
+      <aside className="w-64 bg-white border-r border-gray-200 hidden lg:block fixed top-16 bottom-0 left-0 overflow-y-auto">
         <nav className="p-4 space-y-1">
           <div className="px-3 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
             Admin Panel
@@ -93,7 +93,7 @@ export default async function AdminLayout({
       </div>
 
       {/* Main content */}
-      <div className="flex-1 overflow-auto pb-16 lg:pb-0">{children}</div>
+      <div className="flex-1 overflow-auto pb-16 lg:pb-0 lg:ml-64">{children}</div>
     </div>
   );
 }
