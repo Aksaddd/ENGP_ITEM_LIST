@@ -46,7 +46,7 @@ export default async function HomePage() {
               <span className="text-gradient-hero">Delivered Fresh</span>
             </h1>
 
-            <p className="mt-6 text-lg sm:text-xl text-white/60 max-w-xl leading-relaxed">
+            <p className="mt-6 text-lg sm:text-xl text-white font-semibold max-w-xl leading-relaxed">
               Premium wholesale fruit, hand-selected for quality. Browse our
               curated inventory and experience produce the way it was meant to be.
             </p>
