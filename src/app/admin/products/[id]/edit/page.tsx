@@ -122,7 +122,7 @@ export default function EditProductPage() {
         &larr; Back to Products
       </Link>
 
-      <h1 className="text-3xl font-bold text-gray-900 mt-4 mb-8">Edit Product</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-4 mb-6 sm:mb-8">Edit Product</h1>
 
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm">
@@ -152,7 +152,7 @@ export default function EditProductPage() {
               className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none text-gray-900" />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">Category</label>
               <input id="category" name="category" type="text" defaultValue={product.category || ""}
@@ -169,7 +169,7 @@ export default function EditProductPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
           <h2 className="font-semibold text-gray-900">Batch &amp; Pricing</h2>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="batch" className="block text-sm font-medium text-gray-700 mb-1">Batch Number *</label>
               <input id="batch" name="batch" type="text" required defaultValue={product.batch}
@@ -186,7 +186,7 @@ export default function EditProductPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div>
               <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">Price ($) *</label>
               <input id="price" name="price" type="number" step="0.01" min="0" required defaultValue={product.price}
@@ -219,18 +219,18 @@ export default function EditProductPage() {
           </select>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4">
           <button
             type="button"
             onClick={handleDelete}
-            className="text-red-600 hover:text-red-700 text-sm font-medium"
+            className="text-red-600 hover:text-red-700 text-sm font-medium text-center sm:text-left"
           >
             Delete Product
           </button>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <Link href="/admin/products"
-              className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+              className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors text-center">
               Cancel
             </Link>
             <button type="submit" disabled={saving}

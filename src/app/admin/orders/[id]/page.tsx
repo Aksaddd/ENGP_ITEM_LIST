@@ -109,7 +109,7 @@ export default function AdminOrderDetailPage() {
 
       <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">{order.orderNumber}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{order.orderNumber}</h1>
           <div className="flex items-center gap-3 mt-2">
             <OrderStatusBadge status={order.status} />
             <span className="text-sm text-gray-500">
@@ -148,33 +148,35 @@ export default function AdminOrderDetailPage() {
 
       {/* Status Progress */}
       {order.status !== "cancelled" && (
-        <div className="mt-6 bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            {STATUS_FLOW.map((status, i) => {
-              const isDone = currentIndex >= i;
-              const isCurrent = currentIndex === i;
-              return (
-                <div key={status} className="flex items-center flex-1">
-                  <div className="flex flex-col items-center">
-                    <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                        isDone
-                          ? "bg-green-600 text-white"
-                          : "bg-gray-200 text-gray-500"
-                      } ${isCurrent ? "ring-2 ring-green-300" : ""}`}
-                    >
-                      {isDone ? "✓" : i + 1}
+        <div className="mt-6 bg-white rounded-xl border border-gray-200 p-4 sm:p-6">
+          <div className="overflow-x-auto">
+            <div className="flex items-center justify-between min-w-[400px]">
+              {STATUS_FLOW.map((status, i) => {
+                const isDone = currentIndex >= i;
+                const isCurrent = currentIndex === i;
+                return (
+                  <div key={status} className="flex items-center flex-1">
+                    <div className="flex flex-col items-center">
+                      <div
+                        className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium ${
+                          isDone
+                            ? "bg-green-600 text-white"
+                            : "bg-gray-200 text-gray-500"
+                        } ${isCurrent ? "ring-2 ring-green-300" : ""}`}
+                      >
+                        {isDone ? "✓" : i + 1}
+                      </div>
+                      <span className={`text-[10px] sm:text-xs mt-1 capitalize ${isDone ? "text-green-600 font-medium" : "text-gray-400"}`}>
+                        {status}
+                      </span>
                     </div>
-                    <span className={`text-xs mt-1 capitalize ${isDone ? "text-green-600 font-medium" : "text-gray-400"}`}>
-                      {status}
-                    </span>
+                    {i < STATUS_FLOW.length - 1 && (
+                      <div className={`flex-1 h-0.5 mx-1 sm:mx-2 ${currentIndex > i ? "bg-green-600" : "bg-gray-200"}`} />
+                    )}
                   </div>
-                  {i < STATUS_FLOW.length - 1 && (
-                    <div className={`flex-1 h-0.5 mx-2 ${currentIndex > i ? "bg-green-600" : "bg-gray-200"}`} />
-                  )}
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
@@ -189,31 +191,33 @@ export default function AdminOrderDetailPage() {
             </div>
             <div className="divide-y divide-gray-100">
               {order.items.map((item) => (
-                <div key={item.id} className="px-6 py-4 flex items-center gap-4">
-                  <div className="w-10 h-10 bg-gradient-to-br from-green-50 to-emerald-100 rounded-lg flex items-center justify-center text-lg flex-shrink-0 overflow-hidden">
+                <div key={item.id} className="px-4 sm:px-6 py-4 flex items-center gap-3 sm:gap-4">
+                  <div className="w-10 h-10 bg-gradient-to-br from-green-50 to-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden">
                     {item.product.imageUrl ? (
                       <img src={item.product.imageUrl} alt={item.product.name} className="w-full h-full object-cover" />
                     ) : (
-                      "🍎"
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-green-600">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                      </svg>
                     )}
                   </div>
-                  <div className="flex-1">
-                    <div className="font-medium text-gray-900">{item.product.name}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium text-gray-900 truncate">{item.product.name}</div>
                     <div className="text-xs text-gray-500">
                       Batch {item.product.batch} &middot; Grade {item.product.batchGrade}
                     </div>
                   </div>
-                  <div className="text-sm text-gray-600">x{item.quantity}</div>
-                  <div className="text-right">
-                    <div className="font-medium text-gray-900">${(item.priceAtTime * item.quantity).toFixed(2)}</div>
+                  <div className="text-sm text-gray-600 flex-shrink-0">x{item.quantity}</div>
+                  <div className="text-right flex-shrink-0">
+                    <div className="font-medium text-gray-900 text-sm sm:text-base">${(item.priceAtTime * item.quantity).toFixed(2)}</div>
                     <div className="text-xs text-gray-500">${item.priceAtTime.toFixed(2)} {item.product.unit}</div>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="px-6 py-4 border-t border-gray-200 flex justify-between items-center">
+            <div className="px-4 sm:px-6 py-4 border-t border-gray-200 flex justify-between items-center">
               <span className="font-semibold text-gray-900">Total</span>
-              <span className="text-2xl font-bold text-gray-900">${order.totalAmount.toFixed(2)}</span>
+              <span className="text-xl sm:text-2xl font-bold text-gray-900">${order.totalAmount.toFixed(2)}</span>
             </div>
           </div>
 

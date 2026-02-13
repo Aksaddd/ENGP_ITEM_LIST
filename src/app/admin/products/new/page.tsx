@@ -58,7 +58,7 @@ export default function NewProductPage() {
         &larr; Back to Products
       </Link>
 
-      <h1 className="text-3xl font-bold text-gray-900 mt-4 mb-8">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-4 mb-6 sm:mb-8">
         Add New Product
       </h1>
 
@@ -112,7 +112,7 @@ export default function NewProductPage() {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
                 Category
@@ -143,7 +143,7 @@ export default function NewProductPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
           <h2 className="font-semibold text-gray-900">Batch &amp; Pricing</h2>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="batch" className="block text-sm font-medium text-gray-700 mb-1">
                 Batch Number *
@@ -174,7 +174,7 @@ export default function NewProductPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div>
               <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
                 Price ($) *

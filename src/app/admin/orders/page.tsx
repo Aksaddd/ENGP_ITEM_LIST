@@ -17,8 +17,8 @@ export default async function AdminOrdersPage() {
   return (
     <div className="p-6 lg:p-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Orders</h1>
-        <p className="text-gray-600 mt-1">{orders.length} total orders</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Orders</h1>
+        <p className="text-sm sm:text-base text-gray-600 mt-1">{orders.length} total orders</p>
       </div>
 
       {orders.length === 0 ? (
@@ -27,7 +27,41 @@ export default async function AdminOrdersPage() {
           <p className="text-gray-600 mt-1">Orders will appear here when customers place them.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        {/* Mobile card view */}
+        <div className="md:hidden space-y-3">
+          {orders.map((order) => (
+            <Link
+              key={order.id}
+              href={`/admin/orders/${order.id}`}
+              className="block bg-white rounded-xl border border-gray-200 p-4 hover:bg-gray-50 transition-colors"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-medium text-green-600">{order.orderNumber}</span>
+                <OrderStatusBadge status={order.status} />
+              </div>
+              <div className="text-sm text-gray-900">{order.user.name}</div>
+              <div className="text-xs text-gray-500">
+                {order.user.company || order.user.email}
+              </div>
+              <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                <div className="flex items-center gap-3 text-sm">
+                  <span className="font-medium text-gray-900">${order.totalAmount.toFixed(2)}</span>
+                  <span className="text-gray-400">|</span>
+                  <span className="text-gray-500">{order._count.items} items</span>
+                </div>
+                <span className="text-xs text-gray-500">
+                  {new Date(order.createdAt).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        {/* Desktop table view */}
+        <div className="hidden md:block bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
