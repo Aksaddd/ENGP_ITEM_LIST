@@ -78,3 +78,9 @@ model AuditLog {
   description String
   createdAt   DateTime @default(now())
 }
+
+model SiteSettings {
+  id        String   @id @default("default")
+  heroVideo String   @default("")
+  updatedAt DateTime @updatedAt
+}

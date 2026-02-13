@@ -42,3 +42,8 @@ export type OrderItem = Prisma.OrderItemModel
  * 
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model SiteSettings
+ * 
+ */
+export type SiteSettings = Prisma.SiteSettingsModel

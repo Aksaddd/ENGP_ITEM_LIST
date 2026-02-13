@@ -2,27 +2,32 @@
 
 import { useRef, useEffect, useState } from "react";
 
-const VIDEO_URL =
-  "https://videos.pexels.com/video-files/3195394/3195394-uhd_2560_1440_25fps.mp4";
+interface HeroVideoProps {
+  videoUrl?: string;
+}
 
-export function HeroVideo() {
+export function HeroVideo({ videoUrl }: HeroVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || !videoUrl) return;
+
+    setLoaded(false);
 
     const handleCanPlay = () => setLoaded(true);
     video.addEventListener("canplay", handleCanPlay);
 
-    // Attempt autoplay (muted videos autoplay in all modern browsers)
+    video.load();
     video.play().catch(() => {
       // Autoplay blocked — still show the overlay gradient
     });
 
     return () => video.removeEventListener("canplay", handleCanPlay);
-  }, []);
+  }, [videoUrl]);
+
+  if (!videoUrl) return null;
 
   return (
     <div className="hero-video-wrap">
@@ -36,7 +41,7 @@ export function HeroVideo() {
           loaded ? "opacity-100" : "opacity-0"
         }`}
       >
-        <source src={VIDEO_URL} type="video/mp4" />
+        <source src={videoUrl} type="video/mp4" />
       </video>
     </div>
   );
