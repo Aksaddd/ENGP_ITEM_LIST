@@ -47,3 +47,8 @@ export type AuditLog = Prisma.AuditLogModel
  * 
  */
 export type SiteSettings = Prisma.SiteSettingsModel
+/**
+ * Model PageContent
+ * 
+ */
+export type PageContent = Prisma.PageContentModel

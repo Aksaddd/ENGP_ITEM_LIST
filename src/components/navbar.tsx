@@ -59,6 +59,36 @@ export function Navbar() {
               >
                 Catalog
               </Link>
+              <Link
+                href="/about"
+                className={`nav-link px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                  textOnBg
+                    ? "text-white/70 hover:text-white"
+                    : "text-[#44403C] hover:text-[#064E3B]"
+                }`}
+              >
+                About
+              </Link>
+              <Link
+                href="/how-it-works"
+                className={`nav-link px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                  textOnBg
+                    ? "text-white/70 hover:text-white"
+                    : "text-[#44403C] hover:text-[#064E3B]"
+                }`}
+              >
+                How It Works
+              </Link>
+              <Link
+                href="/contact"
+                className={`nav-link px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                  textOnBg
+                    ? "text-white/70 hover:text-white"
+                    : "text-[#44403C] hover:text-[#064E3B]"
+                }`}
+              >
+                Contact
+              </Link>
               {status !== "loading" && session && (
                 <Link
                   href="/orders"
@@ -208,6 +238,27 @@ export function Navbar() {
               onClick={() => setMobileOpen(false)}
             >
               Catalog
+            </Link>
+            <Link
+              href="/about"
+              className="block px-4 py-3 text-sm font-medium text-[#44403C] hover:text-[#064E3B] hover:bg-[#064E3B]/5 rounded-xl transition-all duration-200"
+              onClick={() => setMobileOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              href="/how-it-works"
+              className="block px-4 py-3 text-sm font-medium text-[#44403C] hover:text-[#064E3B] hover:bg-[#064E3B]/5 rounded-xl transition-all duration-200"
+              onClick={() => setMobileOpen(false)}
+            >
+              How It Works
+            </Link>
+            <Link
+              href="/contact"
+              className="block px-4 py-3 text-sm font-medium text-[#44403C] hover:text-[#064E3B] hover:bg-[#064E3B]/5 rounded-xl transition-all duration-200"
+              onClick={() => setMobileOpen(false)}
+            >
+              Contact
             </Link>
             {status !== "loading" && session && (
               <Link

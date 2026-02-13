@@ -84,3 +84,9 @@ model SiteSettings {
   heroVideo String   @default("")
   updatedAt DateTime @updatedAt
 }
+
+model PageContent {
+  id        String   @id
+  content   String   @default("{}")
+  updatedAt DateTime @updatedAt
+}

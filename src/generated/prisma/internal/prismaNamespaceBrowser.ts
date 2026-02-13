@@ -56,7 +56,8 @@ export const ModelName = {
   Order: 'Order',
   OrderItem: 'OrderItem',
   AuditLog: 'AuditLog',
-  SiteSettings: 'SiteSettings'
+  SiteSettings: 'SiteSettings',
+  PageContent: 'PageContent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -156,6 +157,15 @@ export const SiteSettingsScalarFieldEnum = {
 } as const
 
 export type SiteSettingsScalarFieldEnum = (typeof SiteSettingsScalarFieldEnum)[keyof typeof SiteSettingsScalarFieldEnum]
+
+
+export const PageContentScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PageContentScalarFieldEnum = (typeof PageContentScalarFieldEnum)[keyof typeof PageContentScalarFieldEnum]
 
 
 export const SortOrder = {

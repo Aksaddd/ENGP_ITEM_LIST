@@ -269,15 +269,21 @@ export default async function HomePage() {
                 ENGP
               </span>
             </div>
-            <div className="flex items-center gap-8 text-sm">
+            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 text-sm">
               <Link href="/catalog" className="hover:text-white transition-colors duration-300">
                 Catalog
               </Link>
+              <Link href="/about" className="hover:text-white transition-colors duration-300">
+                About
+              </Link>
+              <Link href="/how-it-works" className="hover:text-white transition-colors duration-300">
+                How It Works
+              </Link>
+              <Link href="/contact" className="hover:text-white transition-colors duration-300">
+                Contact
+              </Link>
               <Link href="/login" className="hover:text-white transition-colors duration-300">
                 Sign In
-              </Link>
-              <Link href="/register" className="hover:text-white transition-colors duration-300">
-                Register
               </Link>
             </div>
             <p className="text-xs text-[#57534E]">

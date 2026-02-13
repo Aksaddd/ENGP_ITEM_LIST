@@ -389,7 +389,8 @@ export const ModelName = {
   Order: 'Order',
   OrderItem: 'OrderItem',
   AuditLog: 'AuditLog',
-  SiteSettings: 'SiteSettings'
+  SiteSettings: 'SiteSettings',
+  PageContent: 'PageContent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "product" | "order" | "orderItem" | "auditLog" | "siteSettings"
+    modelProps: "user" | "product" | "order" | "orderItem" | "auditLog" | "siteSettings" | "pageContent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -853,6 +854,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PageContent: {
+      payload: Prisma.$PageContentPayload<ExtArgs>
+      fields: Prisma.PageContentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PageContentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageContentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PageContentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageContentPayload>
+        }
+        findFirst: {
+          args: Prisma.PageContentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageContentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PageContentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageContentPayload>
+        }
+        findMany: {
+          args: Prisma.PageContentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageContentPayload>[]
+        }
+        create: {
+          args: Prisma.PageContentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageContentPayload>
+        }
+        createMany: {
+          args: Prisma.PageContentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PageContentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageContentPayload>[]
+        }
+        delete: {
+          args: Prisma.PageContentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageContentPayload>
+        }
+        update: {
+          args: Prisma.PageContentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageContentPayload>
+        }
+        deleteMany: {
+          args: Prisma.PageContentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PageContentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PageContentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageContentPayload>[]
+        }
+        upsert: {
+          args: Prisma.PageContentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PageContentPayload>
+        }
+        aggregate: {
+          args: Prisma.PageContentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePageContent>
+        }
+        groupBy: {
+          args: Prisma.PageContentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PageContentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PageContentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PageContentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -973,6 +1048,15 @@ export const SiteSettingsScalarFieldEnum = {
 } as const
 
 export type SiteSettingsScalarFieldEnum = (typeof SiteSettingsScalarFieldEnum)[keyof typeof SiteSettingsScalarFieldEnum]
+
+
+export const PageContentScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PageContentScalarFieldEnum = (typeof PageContentScalarFieldEnum)[keyof typeof PageContentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1125,6 +1209,7 @@ export type GlobalOmitConfig = {
   orderItem?: Prisma.OrderItemOmit
   auditLog?: Prisma.AuditLogOmit
   siteSettings?: Prisma.SiteSettingsOmit
+  pageContent?: Prisma.PageContentOmit
 }
 
 /* Types for Logging */
