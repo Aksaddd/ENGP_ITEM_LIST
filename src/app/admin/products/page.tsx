@@ -46,6 +46,7 @@ export default async function AdminProductsPage() {
           </Link>
         </div>
       ) : (
+        <>
         {/* Mobile card view */}
         <div className="md:hidden space-y-3">
           {products.map((product) => (
@@ -206,6 +207,7 @@ export default async function AdminProductsPage() {
             </table>
           </div>
         </div>
+        </>
       )}
     </div>
   );

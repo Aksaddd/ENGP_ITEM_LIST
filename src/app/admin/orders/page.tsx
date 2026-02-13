@@ -27,6 +27,7 @@ export default async function AdminOrdersPage() {
           <p className="text-gray-600 mt-1">Orders will appear here when customers place them.</p>
         </div>
       ) : (
+        <>
         {/* Mobile card view */}
         <div className="md:hidden space-y-3">
           {orders.map((order) => (
@@ -137,6 +138,7 @@ export default async function AdminOrdersPage() {
             </table>
           </div>
         </div>
+        </>
       )}
     </div>
   );
