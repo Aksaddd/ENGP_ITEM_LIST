@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
+import { put } from "@vercel/blob";
 import { randomUUID } from "crypto";
 
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -53,19 +52,15 @@ export async function POST(request: Request) {
     }
 
     const ext = file.name.split(".").pop()?.toLowerCase() || (isImage ? "jpg" : "mp4");
-    const safeName = `${randomUUID()}.${ext}`;
     const subDir = isImage ? "images" : "videos";
+    const blobPath = `uploads/${subDir}/${randomUUID()}.${ext}`;
 
-    const uploadDir = path.join(process.cwd(), "public", "uploads", subDir);
-    await mkdir(uploadDir, { recursive: true });
+    const blob = await put(blobPath, file, {
+      access: "public",
+      contentType: file.type,
+    });
 
-    const filePath = path.join(uploadDir, safeName);
-    const bytes = await file.arrayBuffer();
-    await writeFile(filePath, Buffer.from(bytes));
-
-    const url = `/uploads/${subDir}/${safeName}`;
-
-    return NextResponse.json({ url, type: isImage ? "image" : "video" });
+    return NextResponse.json({ url: blob.url, type: isImage ? "image" : "video" });
   } catch {
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
