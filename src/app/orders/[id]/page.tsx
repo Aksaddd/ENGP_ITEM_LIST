@@ -216,7 +216,9 @@ export default function OrderDetailPage() {
                     {item.product.imageUrl ? (
                       <img src={item.product.imageUrl} alt={item.product.name} className="w-full h-full object-cover" />
                     ) : (
-                      <span className="fruit-shadow">🍎</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-[#059669]/40">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V15m0 0l-2.25 1.313" />
+                      </svg>
                     )}
                   </div>
 

@@ -71,9 +71,9 @@ export function ProductCard({
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <span className="text-5xl fruit-shadow transition-all duration-500 group-hover:scale-125 group-hover:rotate-6">
-              🍎
-            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-14 h-14 text-[#059669]/25 transition-all duration-500 group-hover:scale-110 group-hover:text-[#059669]/40">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V15m0 0l-2.25 1.313M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-18 0l9 5.25 9-5.25M3 16.5l9-5.25m9 5.25l-9-5.25" />
+            </svg>
           </div>
         )}
 

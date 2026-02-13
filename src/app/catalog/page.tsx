@@ -117,7 +117,9 @@ export default async function CatalogPage({
         {/* Products Grid */}
         {products.length === 0 ? (
           <div className="text-center py-24">
-            <span className="text-5xl mb-6 block fruit-shadow">🍊</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-14 h-14 mx-auto mb-6 text-[#059669]/30">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
             <h3 className="text-lg font-semibold text-[#1A1A1A] mt-4">
               No products found
             </h3>

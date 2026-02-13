@@ -18,19 +18,17 @@ export default async function HomePage() {
     <div className="overflow-hidden">
       {/* ===== Hero Section ===== */}
       <section className="bg-hero relative min-h-[92vh] flex items-center overflow-hidden">
-        {/* Floating fruit decorations */}
+        {/* Subtle decorative circles instead of emojis */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <span className="absolute top-[15%] right-[8%] text-7xl opacity-20 animate-float fruit-shadow" style={{ animationDelay: "0s" }}>🍊</span>
-          <span className="absolute top-[35%] right-[22%] text-5xl opacity-15 animate-float fruit-shadow" style={{ animationDelay: "1.5s" }}>🍋</span>
-          <span className="absolute bottom-[20%] right-[12%] text-6xl opacity-15 animate-float fruit-shadow" style={{ animationDelay: "3s" }}>🥭</span>
-          <span className="absolute top-[60%] right-[35%] text-4xl opacity-10 animate-float fruit-shadow" style={{ animationDelay: "2s" }}>🍇</span>
-          <span className="absolute bottom-[35%] left-[5%] text-5xl opacity-10 animate-float fruit-shadow" style={{ animationDelay: "4s" }}>🍑</span>
-          <span className="absolute top-[20%] left-[15%] text-4xl opacity-8 animate-float fruit-shadow" style={{ animationDelay: "2.5s" }}>🫐</span>
+          <div className="absolute top-[15%] right-[10%] w-64 h-64 rounded-full bg-white/5 animate-float" style={{ animationDelay: "0s" }} />
+          <div className="absolute top-[45%] right-[25%] w-40 h-40 rounded-full bg-white/3 animate-float" style={{ animationDelay: "2s" }} />
+          <div className="absolute bottom-[25%] left-[8%] w-48 h-48 rounded-full bg-white/4 animate-float" style={{ animationDelay: "4s" }} />
+          <div className="absolute top-[20%] left-[20%] w-32 h-32 rounded-full bg-white/3 animate-float" style={{ animationDelay: "1.5s" }} />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 relative z-10">
           <div className="max-w-3xl animate-fade-in-up">
-            <div className="badge-fresh inline-flex items-center gap-2 mb-6 !bg-white/10 !text-white/80 border border-white/10">
+            <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-white/15 bg-white/5 text-white/70 text-xs font-medium tracking-wide">
               <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
               Fresh inventory updated daily
             </div>
@@ -49,7 +47,7 @@ export default async function HomePage() {
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
                 href="/catalog"
-                className="btn-primary !bg-white !text-[#064E3B] hover:!bg-white/90 text-base !px-8 !py-3.5"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white text-[#064E3B] text-base font-medium transition-all duration-300 hover:shadow-[0_8px_30px_rgba(255,255,255,0.25)] hover:scale-[1.03] active:scale-[0.97]"
               >
                 Explore Catalog
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
@@ -58,7 +56,7 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/register"
-                className="btn-secondary !bg-white/10 !text-white !border-white/20 hover:!bg-white/15 text-base !px-8 !py-3.5"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-white/30 text-white text-base font-medium transition-all duration-300 hover:bg-white/10 hover:border-white/50 hover:scale-[1.03] active:scale-[0.97]"
               >
                 Create Account
               </Link>
@@ -101,9 +99,12 @@ export default async function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 stagger-children">
+          {/* Step 1 - Browse */}
           <div className="text-center group animate-fade-in-up">
             <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-emerald-50 to-emerald-100 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-emerald-200/50">
-              <span className="text-3xl fruit-shadow">🔍</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 text-[#059669]">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
             </div>
             <h3 className="text-lg font-semibold text-[#1A1A1A] mb-2">
               Browse Inventory
@@ -114,9 +115,12 @@ export default async function HomePage() {
             </p>
           </div>
 
+          {/* Step 2 - Order */}
           <div className="text-center group animate-fade-in-up">
             <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-amber-50 to-amber-100 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-amber-200/50">
-              <span className="text-3xl fruit-shadow">🛒</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 text-[#D97706]">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+              </svg>
             </div>
             <h3 className="text-lg font-semibold text-[#1A1A1A] mb-2">
               Place Your Order
@@ -127,9 +131,12 @@ export default async function HomePage() {
             </p>
           </div>
 
+          {/* Step 3 - Deliver */}
           <div className="text-center group animate-fade-in-up">
             <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-rose-50 to-rose-100 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-rose-200/50">
-              <span className="text-3xl fruit-shadow">📦</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 text-[#E11D48]">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0H6.375c-.621 0-1.125-.504-1.125-1.125v0c0-.621.504-1.125 1.125-1.125h14.25c.621 0 1.125.504 1.125 1.125v0c0 .621-.504 1.125-1.125 1.125Zm0-4.5V8.625c0-.621-.504-1.125-1.125-1.125H16.5M3.25 14.25V8.625c0-.621.504-1.125 1.125-1.125h2.25" />
+              </svg>
             </div>
             <h3 className="text-lg font-semibold text-[#1A1A1A] mb-2">
               We Prepare &amp; Deliver
@@ -177,9 +184,9 @@ export default async function HomePage() {
                       className="w-full h-full object-cover img-zoom"
                     />
                   ) : (
-                    <span className="text-6xl fruit-shadow transition-transform duration-500 group-hover:scale-125 group-hover:rotate-6">
-                      🍎
-                    </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-16 h-16 text-[#059669]/30 transition-transform duration-500 group-hover:scale-110">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V15m0 0l-2.25 1.313M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-18 0l9 5.25 9-5.25M3 16.5l9-5.25m9 5.25l-9-5.25" />
+                    </svg>
                   )}
                   <div className="absolute top-3 right-3">
                     <span className="badge-fresh">
@@ -229,10 +236,16 @@ export default async function HomePage() {
               Quality guaranteed, every delivery.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/register" className="btn-gold text-base !px-8 !py-3.5">
+              <Link
+                href="/register"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#D4A574] text-white text-base font-medium transition-all duration-300 hover:bg-[#C9956B] hover:shadow-[0_8px_30px_rgba(212,165,116,0.4)] hover:scale-[1.03] active:scale-[0.97]"
+              >
                 Start Ordering
               </Link>
-              <Link href="/catalog" className="btn-secondary !bg-white/10 !text-white !border-white/15 hover:!bg-white/15 text-base !px-8 !py-3.5">
+              <Link
+                href="/catalog"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-white/25 text-white text-base font-medium transition-all duration-300 hover:bg-white/10 hover:border-white/40 hover:scale-[1.03] active:scale-[0.97]"
+              >
                 Browse Catalog
               </Link>
             </div>
@@ -245,7 +258,10 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-2.5">
-              <span className="text-xl fruit-shadow">🍊</span>
+              {/* Clean leaf icon instead of emoji */}
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-[#059669]">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+              </svg>
               <span className="text-lg font-semibold text-white tracking-tight">
                 FreshBatch
               </span>
