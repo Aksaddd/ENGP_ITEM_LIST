@@ -4,14 +4,22 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { useCart } from "./cart-provider";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export function Navbar() {
   const { data: session } = useSession();
   const { totalItems } = useCart();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   const isAdmin = session?.user?.role === "admin";
+
+  // Pages with dark hero backgrounds where navbar text should be white
+  const isDarkHero = pathname === "/";
+
+  // When not scrolled on dark hero pages, use white text; otherwise dark text
+  const textOnBg = !scrolled && isDarkHero;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -32,11 +40,10 @@ export function Navbar() {
           {/* Logo */}
           <div className="flex items-center gap-10">
             <Link href="/" className="flex items-center gap-2 group">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-[#059669] transition-transform duration-300 group-hover:scale-110">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
-              </svg>
-              <span className="text-lg font-semibold tracking-tight text-[#1A1A1A]">
-                FreshBatch
+              <span className={`font-display text-2xl font-bold tracking-tight transition-colors duration-300 ${
+                textOnBg ? "text-white" : "text-[#1A1A1A]"
+              }`}>
+                ENGP
               </span>
             </Link>
 
@@ -44,14 +51,22 @@ export function Navbar() {
             <div className="hidden md:flex items-center gap-1">
               <Link
                 href="/catalog"
-                className="nav-link px-4 py-2 text-sm font-medium text-[#44403C] hover:text-[#064E3B] transition-colors duration-300"
+                className={`nav-link px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                  textOnBg
+                    ? "text-white/70 hover:text-white"
+                    : "text-[#44403C] hover:text-[#064E3B]"
+                }`}
               >
                 Catalog
               </Link>
               {session && (
                 <Link
                   href="/orders"
-                  className="nav-link px-4 py-2 text-sm font-medium text-[#44403C] hover:text-[#064E3B] transition-colors duration-300"
+                  className={`nav-link px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                    textOnBg
+                      ? "text-white/70 hover:text-white"
+                      : "text-[#44403C] hover:text-[#064E3B]"
+                  }`}
                 >
                   My Orders
                 </Link>
@@ -59,7 +74,11 @@ export function Navbar() {
               {isAdmin && (
                 <Link
                   href="/admin"
-                  className="nav-link px-4 py-2 text-sm font-medium text-[#44403C] hover:text-[#064E3B] transition-colors duration-300"
+                  className={`nav-link px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                    textOnBg
+                      ? "text-white/70 hover:text-white"
+                      : "text-[#44403C] hover:text-[#064E3B]"
+                  }`}
                 >
                   Admin
                 </Link>
@@ -72,7 +91,11 @@ export function Navbar() {
             {/* Cart */}
             <Link
               href="/cart"
-              className="relative p-2.5 rounded-full text-[#44403C] hover:text-[#064E3B] hover:bg-[#064E3B]/5 transition-all duration-300"
+              className={`relative p-2.5 rounded-full transition-all duration-300 ${
+                textOnBg
+                  ? "text-white/70 hover:text-white hover:bg-white/10"
+                  : "text-[#44403C] hover:text-[#064E3B] hover:bg-[#064E3B]/5"
+              }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -98,22 +121,40 @@ export function Navbar() {
             {/* Auth - Desktop */}
             {session ? (
               <div className="hidden md:flex items-center gap-3">
-                <span className="text-sm text-[#78716C]">
+                <span className={`text-sm transition-colors duration-300 ${
+                  textOnBg ? "text-white/60" : "text-[#78716C]"
+                }`}>
                   {session.user.name}
                 </span>
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="btn-ghost text-xs text-[#78716C] hover:text-red-600"
+                  className={`btn-ghost text-xs ${
+                    textOnBg
+                      ? "!text-white/50 hover:!text-red-300"
+                      : "text-[#78716C] hover:text-red-600"
+                  }`}
                 >
                   Sign Out
                 </button>
               </div>
             ) : (
               <div className="hidden md:flex items-center gap-2">
-                <Link href="/login" className="btn-ghost text-sm">
+                <Link
+                  href="/login"
+                  className={`btn-ghost text-sm ${
+                    textOnBg ? "!text-white/70 hover:!text-white" : ""
+                  }`}
+                >
                   Sign In
                 </Link>
-                <Link href="/register" className="btn-primary text-sm !px-5 !py-2">
+                <Link
+                  href="/register"
+                  className={`text-sm !px-5 !py-2 ${
+                    textOnBg
+                      ? "inline-flex items-center justify-center rounded-full border border-white/30 text-white font-medium transition-all duration-300 hover:bg-white/10"
+                      : "btn-primary"
+                  }`}
+                >
                   Get Started
                 </Link>
               </div>
@@ -121,7 +162,11 @@ export function Navbar() {
 
             {/* Mobile toggle */}
             <button
-              className="md:hidden p-2 rounded-full text-[#44403C] hover:bg-[#064E3B]/5 transition-colors duration-300"
+              className={`md:hidden p-2 rounded-full transition-colors duration-300 ${
+                textOnBg
+                  ? "text-white/70 hover:bg-white/10"
+                  : "text-[#44403C] hover:bg-[#064E3B]/5"
+              }`}
               onClick={() => setMobileOpen(!mobileOpen)}
             >
               <svg

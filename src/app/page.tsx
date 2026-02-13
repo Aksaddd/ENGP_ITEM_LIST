@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { HeroVideo } from "@/components/hero-video";
 
 export const dynamic = "force-dynamic";
 
@@ -17,14 +18,9 @@ export default async function HomePage() {
   return (
     <div className="overflow-hidden">
       {/* ===== Hero Section ===== */}
-      <section className="bg-hero relative min-h-[92vh] flex items-center overflow-hidden">
-        {/* Subtle decorative circles instead of emojis */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[15%] right-[10%] w-64 h-64 rounded-full bg-white/5 animate-float" style={{ animationDelay: "0s" }} />
-          <div className="absolute top-[45%] right-[25%] w-40 h-40 rounded-full bg-white/3 animate-float" style={{ animationDelay: "2s" }} />
-          <div className="absolute bottom-[25%] left-[8%] w-48 h-48 rounded-full bg-white/4 animate-float" style={{ animationDelay: "4s" }} />
-          <div className="absolute top-[20%] left-[20%] w-32 h-32 rounded-full bg-white/3 animate-float" style={{ animationDelay: "1.5s" }} />
-        </div>
+      <section className="relative min-h-[92vh] flex items-center overflow-hidden">
+        {/* Video Background */}
+        <HeroVideo />
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 relative z-10">
           <div className="max-w-3xl animate-fade-in-up">
@@ -33,7 +29,7 @@ export default async function HomePage() {
               Fresh inventory updated daily
             </div>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight text-white">
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight text-white">
               Nature&apos;s Finest,
               <br />
               <span className="text-gradient-hero">Delivered Fresh</span>
@@ -65,24 +61,24 @@ export default async function HomePage() {
         </div>
 
         {/* Bottom gradient fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#FAFAF7] to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#FAFAF7] to-transparent z-10" />
       </section>
 
       {/* ===== Stats Bar ===== */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 -mt-16 relative z-20">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 stagger-children">
           <div className="card p-6 text-center animate-fade-in-up hover-glow">
-            <div className="text-3xl font-bold text-gradient mb-1">
+            <div className="text-3xl font-bold text-gradient mb-1 font-display">
               {productCount}+
             </div>
             <div className="text-sm text-[#78716C]">Premium Products</div>
           </div>
           <div className="card p-6 text-center animate-fade-in-up hover-glow">
-            <div className="text-3xl font-bold text-gradient mb-1">Fresh</div>
+            <div className="text-3xl font-bold text-gradient mb-1 font-display">Fresh</div>
             <div className="text-sm text-[#78716C]">Daily Inventory Updates</div>
           </div>
           <div className="card p-6 text-center animate-fade-in-up hover-glow">
-            <div className="text-3xl font-bold text-gradient mb-1">Graded</div>
+            <div className="text-3xl font-bold text-gradient mb-1 font-display">Graded</div>
             <div className="text-sm text-[#78716C]">Quality Batch Tracking</div>
           </div>
         </div>
@@ -92,7 +88,7 @@ export default async function HomePage() {
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-24">
         <div className="text-center mb-16">
           <span className="badge-gold inline-block mb-4">How It Works</span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] tracking-tight">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#1A1A1A] tracking-tight">
             From Orchard to Your&nbsp;
             <span className="text-gradient">Business</span>
           </h2>
@@ -155,7 +151,7 @@ export default async function HomePage() {
           <div className="flex items-end justify-between mb-10">
             <div>
               <span className="badge-fresh inline-block mb-3">Just Arrived</span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] tracking-tight">
+              <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#1A1A1A] tracking-tight">
                 Latest Arrivals
               </h2>
             </div>
@@ -227,12 +223,12 @@ export default async function HomePage() {
       <section className="relative overflow-hidden">
         <div className="bg-luxury py-24">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-4">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-4">
               Ready for
               <span className="text-gradient-hero"> Premium Produce</span>?
             </h2>
             <p className="text-white/50 text-lg max-w-xl mx-auto mb-10">
-              Join businesses that trust FreshBatch for their wholesale fruit needs.
+              Join businesses that trust ENGP for their wholesale fruit needs.
               Quality guaranteed, every delivery.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
@@ -258,12 +254,8 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-2.5">
-              {/* Clean leaf icon instead of emoji */}
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-[#059669]">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
-              </svg>
-              <span className="text-lg font-semibold text-white tracking-tight">
-                FreshBatch
+              <span className="font-display text-xl font-bold text-white tracking-tight">
+                ENGP
               </span>
             </div>
             <div className="flex items-center gap-8 text-sm">
@@ -278,7 +270,7 @@ export default async function HomePage() {
               </Link>
             </div>
             <p className="text-xs text-[#57534E]">
-              &copy; 2026 FreshBatch Distribution
+              &copy; 2026 ENGP Distribution
             </p>
           </div>
         </div>

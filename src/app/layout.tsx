@@ -4,7 +4,7 @@ import { Providers } from "@/components/providers";
 import { Navbar } from "@/components/navbar";
 
 export const metadata: Metadata = {
-  title: "FreshBatch - Premium Wholesale Fruit",
+  title: "ENGP - Premium Wholesale Fruit",
   description:
     "Curated wholesale fruit, sourced fresh and delivered in bulk. Browse our inventory, place orders, and experience premium produce.",
 };
