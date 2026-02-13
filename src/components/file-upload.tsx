@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import { upload } from "@vercel/blob/client";
 
 interface FileUploadProps {
   accept: "image" | "video";
@@ -28,27 +29,19 @@ export function FileUpload({ accept, currentUrl, onUpload, onRemove }: FileUploa
       setError("");
       setUploading(true);
 
-      const form = new FormData();
-      form.append("file", file);
-
       try {
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          body: form,
+        // Use client-side upload to bypass Vercel's 4.5MB body size limit
+        const blob = await upload(file.name, file, {
+          access: "public",
+          handleUploadUrl: "/api/upload/client-token",
         });
 
-        const data = await res.json();
-
-        if (!res.ok) {
-          setError(data.error || "Upload failed");
-          setUploading(false);
-          return;
-        }
-
-        setPreview(data.url);
-        onUpload(data.url);
-      } catch {
-        setError("Network error — please try again");
+        setPreview(blob.url);
+        onUpload(blob.url);
+      } catch (err) {
+        const message =
+          err instanceof Error ? err.message : "Upload failed";
+        setError(message);
       } finally {
         setUploading(false);
       }
