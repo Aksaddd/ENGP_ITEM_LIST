@@ -57,114 +57,146 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">Your Cart</h1>
-        <p className="text-gray-600 mb-8">Your cart is empty.</p>
-        <Link
-          href="/catalog"
-          className="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors"
-        >
-          Browse Catalog
-        </Link>
+      <div className="min-h-screen pt-24 pb-16">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center py-16">
+          <span className="text-6xl block mb-6 fruit-shadow animate-float">🛒</span>
+          <h1 className="text-3xl font-bold text-[#1A1A1A] tracking-tight mb-3">
+            Your Cart
+          </h1>
+          <p className="text-[#78716C] mb-8">Your cart is empty.</p>
+          <Link href="/catalog" className="btn-primary text-base !px-8 !py-3">
+            Browse Catalog
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Your Cart</h1>
+    <div className="min-h-screen pt-24 pb-16">
+      <div className="max-w-4xl mx-auto px-6 lg:px-8">
+        <h1 className="text-3xl font-bold text-[#1A1A1A] tracking-tight mb-8">
+          Your Cart
+        </h1>
 
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm">
-          {error}
-        </div>
-      )}
+        {error && (
+          <div className="bg-red-50 border border-red-100 text-red-600 px-5 py-3.5 rounded-2xl mb-6 text-sm font-medium animate-fade-in">
+            {error}
+          </div>
+        )}
 
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div className="divide-y divide-gray-200">
-          {items.map((item) => (
-            <div key={item.productId} className="p-4 sm:p-6 flex items-center gap-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-50 to-emerald-100 rounded-lg flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden">
-                {item.imageUrl ? (
-                  <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
-                ) : (
-                  "🍎"
-                )}
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-gray-900">{item.name}</h3>
-                <div className="text-sm text-gray-500">
-                  Batch {item.batch} &middot; Grade {item.batchGrade}
+        {/* Cart Items */}
+        <div className="card mb-6">
+          <div className="divide-y divide-[#F5F5F4]">
+            {items.map((item) => (
+              <div key={item.productId} className="p-5 sm:p-6 flex items-center gap-4 group">
+                <div className="w-16 h-16 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                  {item.imageUrl ? (
+                    <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="fruit-shadow">🍎</span>
+                  )}
                 </div>
-                <div className="text-sm text-gray-500">
-                  ${item.price.toFixed(2)} {item.unit}
+
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-[#1A1A1A] tracking-tight">{item.name}</h3>
+                  <div className="text-xs text-[#A8A29E] mt-0.5 flex items-center gap-2">
+                    <span>Batch {item.batch}</span>
+                    <span className="w-1 h-1 rounded-full bg-[#D6D3D1]" />
+                    <span>Grade {item.batchGrade}</span>
+                  </div>
+                  <div className="text-sm text-[#78716C] mt-0.5">
+                    ${item.price.toFixed(2)} {item.unit}
+                  </div>
+                </div>
+
+                {/* Quantity controls */}
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                    className="w-8 h-8 rounded-full bg-[#F5F5F4] flex items-center justify-center text-[#78716C] hover:bg-[#064E3B]/10 hover:text-[#064E3B] transition-all duration-300 active:scale-90"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+                    </svg>
+                  </button>
+                  <span className="w-10 text-center font-semibold text-[#1A1A1A] text-sm">{item.quantity}</span>
+                  <button
+                    onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                    disabled={item.quantity >= item.maxQuantity}
+                    className="w-8 h-8 rounded-full bg-[#F5F5F4] flex items-center justify-center text-[#78716C] hover:bg-[#064E3B]/10 hover:text-[#064E3B] transition-all duration-300 active:scale-90 disabled:opacity-40"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="text-right min-w-[80px]">
+                  <div className="font-bold text-[#1A1A1A] tracking-tight">
+                    ${(item.price * item.quantity).toFixed(2)}
+                  </div>
+                  <button
+                    onClick={() => removeItem(item.productId)}
+                    className="text-xs text-[#A8A29E] hover:text-red-500 mt-1 transition-colors duration-300"
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
-
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                  className="w-8 h-8 rounded-lg border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-50"
-                >
-                  -
-                </button>
-                <span className="w-10 text-center font-medium text-gray-900">{item.quantity}</span>
-                <button
-                  onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                  disabled={item.quantity >= item.maxQuantity}
-                  className="w-8 h-8 rounded-lg border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-50 disabled:opacity-50"
-                >
-                  +
-                </button>
-              </div>
-
-              <div className="text-right">
-                <div className="font-semibold text-gray-900">
-                  ${(item.price * item.quantity).toFixed(2)}
-                </div>
-                <button
-                  onClick={() => removeItem(item.productId)}
-                  className="text-sm text-red-500 hover:text-red-700 mt-1"
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-6 bg-white rounded-xl border border-gray-200 p-6">
-        <div>
-          <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-1">
-            Order Notes (optional)
-          </label>
-          <textarea
-            id="notes"
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            rows={3}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none text-gray-900"
-            placeholder="Any special requests or notes for this order..."
-          />
+            ))}
+          </div>
         </div>
 
-        <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-200">
+        {/* Order summary */}
+        <div className="card p-6">
           <div>
-            <div className="text-sm text-gray-500">Order Total</div>
-            <div className="text-3xl font-bold text-gray-900">
-              ${totalAmount.toFixed(2)}
-            </div>
+            <label htmlFor="notes" className="block text-sm font-medium text-[#44403C] mb-2">
+              Order Notes
+              <span className="text-[#A8A29E] font-normal ml-1">(optional)</span>
+            </label>
+            <textarea
+              id="notes"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              rows={3}
+              className="w-full px-4 py-3 bg-[#FAFAF7] rounded-2xl input-glow text-[#1A1A1A] text-sm placeholder:text-[#A8A29E] resize-none"
+              placeholder="Any special requests or notes for this order..."
+            />
           </div>
 
-          <button
-            onClick={handleCheckout}
-            disabled={submitting}
-            className="bg-green-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {submitting ? "Placing Order..." : session ? "Place Order" : "Sign In to Order"}
-          </button>
+          <div className="divider-gradient my-6" />
+
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-xs text-[#A8A29E] uppercase tracking-wider font-medium mb-1">
+                Order Total
+              </div>
+              <div className="text-3xl font-bold text-[#1A1A1A] tracking-tight">
+                ${totalAmount.toFixed(2)}
+              </div>
+            </div>
+
+            <button
+              onClick={handleCheckout}
+              disabled={submitting}
+              className="btn-primary text-base !px-8 !py-3.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:!transform-none"
+            >
+              {submitting ? (
+                <>
+                  <svg className="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Placing Order...
+                </>
+              ) : session ? (
+                "Place Order"
+              ) : (
+                "Sign In to Order"
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </div>

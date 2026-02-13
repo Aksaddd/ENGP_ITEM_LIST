@@ -46,56 +46,57 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+    <div className="min-h-screen flex items-center justify-center px-6 py-16 pt-24">
+      <div className="w-full max-w-md animate-fade-in-up">
+        <div className="card p-8 sm:p-10">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-gray-900 mt-4">
+            <span className="text-4xl block mb-4 fruit-shadow">🍊</span>
+            <h1 className="text-2xl font-bold text-[#1A1A1A] tracking-tight">
               Create an account
             </h1>
-            <p className="text-gray-600 mt-1">
+            <p className="text-[#78716C] mt-1.5 text-sm">
               Register to start ordering fresh produce
             </p>
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm">
+            <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-2xl mb-6 text-sm font-medium animate-fade-in">
               {error}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                Full Name *
+              <label htmlFor="name" className="block text-sm font-medium text-[#44403C] mb-2">
+                Full Name <span className="text-[#D4A574]">*</span>
               </label>
               <input
                 id="name"
                 name="name"
                 type="text"
                 required
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all text-gray-900"
+                className="w-full px-4 py-3 bg-[#FAFAF7] rounded-2xl input-glow text-[#1A1A1A] text-sm placeholder:text-[#A8A29E]"
                 placeholder="John Doe"
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email *
+              <label htmlFor="email" className="block text-sm font-medium text-[#44403C] mb-2">
+                Email <span className="text-[#D4A574]">*</span>
               </label>
               <input
                 id="email"
                 name="email"
                 type="email"
                 required
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all text-gray-900"
+                className="w-full px-4 py-3 bg-[#FAFAF7] rounded-2xl input-glow text-[#1A1A1A] text-sm placeholder:text-[#A8A29E]"
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Password *
+              <label htmlFor="password" className="block text-sm font-medium text-[#44403C] mb-2">
+                Password <span className="text-[#D4A574]">*</span>
               </label>
               <input
                 id="password"
@@ -103,33 +104,33 @@ export default function RegisterPage() {
                 type="password"
                 required
                 minLength={6}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all text-gray-900"
+                className="w-full px-4 py-3 bg-[#FAFAF7] rounded-2xl input-glow text-[#1A1A1A] text-sm placeholder:text-[#A8A29E]"
                 placeholder="At least 6 characters"
               />
             </div>
 
             <div>
-              <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="company" className="block text-sm font-medium text-[#44403C] mb-2">
                 Company / Business Name
               </label>
               <input
                 id="company"
                 name="company"
                 type="text"
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all text-gray-900"
+                className="w-full px-4 py-3 bg-[#FAFAF7] rounded-2xl input-glow text-[#1A1A1A] text-sm placeholder:text-[#A8A29E]"
                 placeholder="Optional"
               />
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="phone" className="block text-sm font-medium text-[#44403C] mb-2">
                 Phone Number
               </label>
               <input
                 id="phone"
                 name="phone"
                 type="tel"
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all text-gray-900"
+                className="w-full px-4 py-3 bg-[#FAFAF7] rounded-2xl input-glow text-[#1A1A1A] text-sm placeholder:text-[#A8A29E]"
                 placeholder="Optional"
               />
             </div>
@@ -137,15 +138,25 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-green-600 text-white py-2.5 rounded-lg font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary w-full !py-3 text-base !mt-6 disabled:opacity-50 disabled:cursor-not-allowed disabled:!transform-none"
             >
-              {loading ? "Creating account..." : "Create Account"}
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Creating account...
+                </span>
+              ) : (
+                "Create Account"
+              )}
             </button>
           </form>
 
-          <p className="text-center text-sm text-gray-600 mt-6">
+          <p className="text-center text-sm text-[#78716C] mt-8">
             Already have an account?{" "}
-            <Link href="/login" className="text-green-600 hover:text-green-700 font-medium">
+            <Link href="/login" className="text-[#064E3B] hover:text-[#059669] font-medium transition-colors duration-300">
               Sign in
             </Link>
           </p>

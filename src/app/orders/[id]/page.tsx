@@ -127,19 +127,23 @@ export default function OrderDetailPage() {
 
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-gray-500">Loading order...</div>
+      <div className="min-h-screen pt-24 pb-16">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+          <div className="text-[#A8A29E] text-sm">Loading order...</div>
+        </div>
       </div>
     );
   }
 
   if (!order) {
     return (
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-gray-500">Order not found.</div>
-        <Link href="/orders" className="text-green-600 hover:text-green-700 mt-2 inline-block">
-          &larr; Back to orders
-        </Link>
+      <div className="min-h-screen pt-24 pb-16">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+          <div className="text-[#78716C]">Order not found.</div>
+          <Link href="/orders" className="text-[#064E3B] hover:text-[#059669] mt-2 inline-block text-sm font-medium transition-colors duration-300">
+            &larr; Back to orders
+          </Link>
+        </div>
       </div>
     );
   }
@@ -147,204 +151,212 @@ export default function OrderDetailPage() {
   const isPending = order.status === "pending";
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <Link href="/orders" className="text-green-600 hover:text-green-700 text-sm font-medium">
-        &larr; Back to Orders
-      </Link>
+    <div className="min-h-screen pt-24 pb-16">
+      <div className="max-w-4xl mx-auto px-6 lg:px-8">
+        <Link href="/orders" className="btn-ghost text-sm !px-0 text-[#78716C] hover:text-[#064E3B]">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+          </svg>
+          Back to Orders
+        </Link>
 
-      <div className="mt-4 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">{order.orderNumber}</h1>
-          <div className="flex items-center gap-3 mt-2">
-            <OrderStatusBadge status={order.status} />
-            <span className="text-sm text-gray-500">
-              Placed{" "}
-              {new Date(order.createdAt).toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-                hour: "numeric",
-                minute: "2-digit",
-              })}
+        <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-[#1A1A1A] tracking-tight">{order.orderNumber}</h1>
+            <div className="flex items-center gap-3 mt-2">
+              <OrderStatusBadge status={order.status} />
+              <span className="text-xs text-[#A8A29E]">
+                Placed{" "}
+                {new Date(order.createdAt).toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                })}
+              </span>
+            </div>
+          </div>
+
+          {isPending && !editing && (
+            <div className="flex gap-2">
+              <button onClick={startEditing} className="btn-primary text-sm">
+                Edit Order
+              </button>
+              <button
+                onClick={cancelOrder}
+                className="btn-secondary text-sm !text-red-500 !border-red-200 hover:!bg-red-50"
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+        </div>
+
+        {error && (
+          <div className="mt-4 bg-red-50 border border-red-100 text-red-600 px-5 py-3.5 rounded-2xl text-sm font-medium animate-fade-in">
+            {error}
+          </div>
+        )}
+
+        {/* Order Items */}
+        <div className="mt-6 card">
+          <div className="px-6 py-4 border-b border-[#F5F5F4]">
+            <h2 className="font-semibold text-[#1A1A1A] tracking-tight">Order Items</h2>
+          </div>
+          <div className="divide-y divide-[#F5F5F4]">
+            {order.items.map((item) => {
+              const editItem = editing
+                ? editItems.find((ei) => ei.productId === item.productId)
+                : null;
+
+              return (
+                <div key={item.id} className="p-5 sm:p-6 flex items-center gap-4 group">
+                  <div className="w-12 h-12 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl flex items-center justify-center text-xl flex-shrink-0 overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                    {item.product.imageUrl ? (
+                      <img src={item.product.imageUrl} alt={item.product.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="fruit-shadow">🍎</span>
+                    )}
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-medium text-[#1A1A1A] tracking-tight">{item.product.name}</h3>
+                    <div className="text-xs text-[#A8A29E] mt-0.5 flex items-center gap-2">
+                      <span>Batch {item.product.batch}</span>
+                      <span className="w-1 h-1 rounded-full bg-[#D6D3D1]" />
+                      <span>Grade {item.product.batchGrade}</span>
+                    </div>
+                  </div>
+
+                  {editing && editItem ? (
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() =>
+                          setEditItems((prev) =>
+                            prev
+                              .map((ei) =>
+                                ei.productId === item.productId
+                                  ? { ...ei, quantity: Math.max(0, ei.quantity - 1) }
+                                  : ei
+                              )
+                              .filter((ei) => ei.quantity > 0)
+                          )
+                        }
+                        className="w-8 h-8 rounded-full bg-[#F5F5F4] flex items-center justify-center text-[#78716C] hover:bg-[#064E3B]/10 hover:text-[#064E3B] transition-all duration-300 active:scale-90"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+                        </svg>
+                      </button>
+                      <span className="w-8 text-center font-semibold text-[#1A1A1A] text-sm">
+                        {editItem.quantity}
+                      </span>
+                      <button
+                        onClick={() =>
+                          setEditItems((prev) =>
+                            prev.map((ei) =>
+                              ei.productId === item.productId
+                                ? { ...ei, quantity: ei.quantity + 1 }
+                                : ei
+                            )
+                          )
+                        }
+                        className="w-8 h-8 rounded-full bg-[#F5F5F4] flex items-center justify-center text-[#78716C] hover:bg-[#064E3B]/10 hover:text-[#064E3B] transition-all duration-300 active:scale-90"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                      </button>
+                    </div>
+                  ) : (
+                    <span className="text-sm text-[#78716C]">Qty: {item.quantity}</span>
+                  )}
+
+                  <div className="text-right">
+                    <div className="font-bold text-[#1A1A1A] tracking-tight">
+                      ${(item.priceAtTime * item.quantity).toFixed(2)}
+                    </div>
+                    <div className="text-[11px] text-[#A8A29E]">
+                      ${item.priceAtTime.toFixed(2)} {item.product.unit}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="px-6 py-4 border-t border-[#F5F5F4] flex justify-between items-center">
+            <span className="text-xs text-[#A8A29E] uppercase tracking-wider font-medium">Total</span>
+            <span className="text-2xl font-bold text-[#1A1A1A] tracking-tight">
+              ${order.totalAmount.toFixed(2)}
             </span>
           </div>
         </div>
 
-        {isPending && !editing && (
-          <div className="flex gap-2">
+        {/* Notes */}
+        {(order.notes || editing) && (
+          <div className="mt-4 card p-6">
+            <h2 className="font-semibold text-[#1A1A1A] tracking-tight mb-3">Notes</h2>
+            {editing ? (
+              <textarea
+                value={editNotes}
+                onChange={(e) => setEditNotes(e.target.value)}
+                rows={3}
+                className="w-full px-4 py-3 bg-[#FAFAF7] rounded-2xl input-glow text-[#1A1A1A] text-sm placeholder:text-[#A8A29E] resize-none"
+              />
+            ) : (
+              <p className="text-sm text-[#78716C] leading-relaxed">{order.notes || "No notes"}</p>
+            )}
+          </div>
+        )}
+
+        {/* Edit actions */}
+        {editing && (
+          <div className="mt-4 flex gap-3 justify-end">
             <button
-              onClick={startEditing}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
-            >
-              Edit Order
-            </button>
-            <button
-              onClick={cancelOrder}
-              className="px-4 py-2 border border-red-300 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors"
+              onClick={() => setEditing(false)}
+              className="btn-secondary text-sm"
             >
               Cancel
             </button>
+            <button
+              onClick={saveChanges}
+              disabled={saving}
+              className="btn-primary text-sm disabled:opacity-50 disabled:!transform-none"
+            >
+              {saving ? "Saving..." : "Save Changes"}
+            </button>
           </div>
         )}
-      </div>
 
-      {error && (
-        <div className="mt-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-          {error}
-        </div>
-      )}
-
-      {/* Order Items */}
-      <div className="mt-6 bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="font-semibold text-gray-900">Order Items</h2>
-        </div>
-        <div className="divide-y divide-gray-200">
-          {order.items.map((item) => {
-            const editItem = editing
-              ? editItems.find((ei) => ei.productId === item.productId)
-              : null;
-
-            return (
-              <div key={item.id} className="p-4 sm:p-6 flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-50 to-emerald-100 rounded-lg flex items-center justify-center text-xl flex-shrink-0 overflow-hidden">
-                  {item.product.imageUrl ? (
-                    <img src={item.product.imageUrl} alt={item.product.name} className="w-full h-full object-cover" />
-                  ) : (
-                    "🍎"
-                  )}
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-medium text-gray-900">{item.product.name}</h3>
-                  <div className="text-sm text-gray-500">
-                    Batch {item.product.batch} &middot; Grade {item.product.batchGrade}
+        {/* Audit Log */}
+        <div className="mt-6 card">
+          <div className="px-6 py-4 border-b border-[#F5F5F4]">
+            <h2 className="font-semibold text-[#1A1A1A] tracking-tight">Order History</h2>
+          </div>
+          <div className="divide-y divide-[#F5F5F4]">
+            {order.auditLogs.map((log) => (
+              <div key={log.id} className="px-6 py-3.5">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-sm text-[#1A1A1A]">{log.description}</p>
+                    <p className="text-[11px] text-[#A8A29E] mt-0.5">
+                      by {log.user.name} ({log.user.role})
+                    </p>
                   </div>
-                </div>
-
-                {editing && editItem ? (
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() =>
-                        setEditItems((prev) =>
-                          prev
-                            .map((ei) =>
-                              ei.productId === item.productId
-                                ? { ...ei, quantity: Math.max(0, ei.quantity - 1) }
-                                : ei
-                            )
-                            .filter((ei) => ei.quantity > 0)
-                        )
-                      }
-                      className="w-7 h-7 rounded border border-gray-300 flex items-center justify-center text-sm"
-                    >
-                      -
-                    </button>
-                    <span className="w-8 text-center font-medium text-gray-900">
-                      {editItem.quantity}
-                    </span>
-                    <button
-                      onClick={() =>
-                        setEditItems((prev) =>
-                          prev.map((ei) =>
-                            ei.productId === item.productId
-                              ? { ...ei, quantity: ei.quantity + 1 }
-                              : ei
-                          )
-                        )
-                      }
-                      className="w-7 h-7 rounded border border-gray-300 flex items-center justify-center text-sm"
-                    >
-                      +
-                    </button>
-                  </div>
-                ) : (
-                  <span className="text-sm text-gray-600">Qty: {item.quantity}</span>
-                )}
-
-                <div className="text-right">
-                  <div className="font-medium text-gray-900">
-                    ${(item.priceAtTime * item.quantity).toFixed(2)}
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    ${item.priceAtTime.toFixed(2)} {item.product.unit}
-                  </div>
+                  <span className="text-[11px] text-[#D6D3D1] whitespace-nowrap ml-4">
+                    {new Date(log.createdAt).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "2-digit",
+                    })}
+                  </span>
                 </div>
               </div>
-            );
-          })}
-        </div>
-
-        <div className="px-6 py-4 border-t border-gray-200 flex justify-between items-center">
-          <span className="font-medium text-gray-900">Total</span>
-          <span className="text-2xl font-bold text-gray-900">
-            ${order.totalAmount.toFixed(2)}
-          </span>
-        </div>
-      </div>
-
-      {/* Notes */}
-      {(order.notes || editing) && (
-        <div className="mt-4 bg-white rounded-xl border border-gray-200 p-6">
-          <h2 className="font-semibold text-gray-900 mb-2">Notes</h2>
-          {editing ? (
-            <textarea
-              value={editNotes}
-              onChange={(e) => setEditNotes(e.target.value)}
-              rows={3}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none text-gray-900"
-            />
-          ) : (
-            <p className="text-gray-600">{order.notes || "No notes"}</p>
-          )}
-        </div>
-      )}
-
-      {/* Edit actions */}
-      {editing && (
-        <div className="mt-4 flex gap-3 justify-end">
-          <button
-            onClick={() => setEditing(false)}
-            className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={saveChanges}
-            disabled={saving}
-            className="px-6 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 disabled:opacity-50"
-          >
-            {saving ? "Saving..." : "Save Changes"}
-          </button>
-        </div>
-      )}
-
-      {/* Audit Log */}
-      <div className="mt-6 bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="font-semibold text-gray-900">Order History</h2>
-        </div>
-        <div className="divide-y divide-gray-100">
-          {order.auditLogs.map((log) => (
-            <div key={log.id} className="px-6 py-3">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm text-gray-900">{log.description}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">
-                    by {log.user.name} ({log.user.role})
-                  </p>
-                </div>
-                <span className="text-xs text-gray-400 whitespace-nowrap ml-4">
-                  {new Date(log.createdAt).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "2-digit",
-                  })}
-                </span>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

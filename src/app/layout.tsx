@@ -4,9 +4,9 @@ import { Providers } from "@/components/providers";
 import { Navbar } from "@/components/navbar";
 
 export const metadata: Metadata = {
-  title: "FreshBatch - Wholesale Fruit Distribution",
+  title: "FreshBatch - Premium Wholesale Fruit",
   description:
-    "Order fresh, quality fruit in bulk. Browse our inventory, place orders, and track deliveries.",
+    "Curated wholesale fruit, sourced fresh and delivered in bulk. Browse our inventory, place orders, and experience premium produce.",
 };
 
 export default function RootLayout({
@@ -16,10 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body className="antialiased min-h-screen bg-[#FAFAF7]">
         <Providers>
           <Navbar />
-          <main>{children}</main>
+          <main className="relative">{children}</main>
         </Providers>
       </body>
     </html>
