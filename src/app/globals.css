@@ -76,12 +76,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.45) 0%,
-    rgba(0, 0, 0, 0.35) 50%,
-    rgba(0, 0, 0, 0.50) 100%
-  );
+  background: none;
   z-index: 1;
 }
 
@@ -438,9 +433,7 @@ html {
    ========================================= */
 
 .bg-hero {
-  background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(5, 150, 105, 0.15) 0%, transparent 60%),
-    linear-gradient(180deg, #064E3B 0%, #065F46 40%, #047857 100%);
+  background: linear-gradient(180deg, #1A1A1A 0%, #292524 40%, #1A1A1A 100%);
 }
 
 .bg-luxury {
