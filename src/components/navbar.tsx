@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 export function Navbar() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { totalItems } = useCart();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -59,7 +59,7 @@ export function Navbar() {
               >
                 Catalog
               </Link>
-              {session && (
+              {status !== "loading" && session && (
                 <Link
                   href="/orders"
                   className={`nav-link px-4 py-2 text-sm font-medium transition-colors duration-300 ${
@@ -71,7 +71,7 @@ export function Navbar() {
                   My Orders
                 </Link>
               )}
-              {isAdmin && (
+              {status !== "loading" && isAdmin && (
                 <Link
                   href="/admin"
                   className={`nav-link px-4 py-2 text-sm font-medium transition-colors duration-300 ${
@@ -119,7 +119,11 @@ export function Navbar() {
             </Link>
 
             {/* Auth - Desktop */}
-            {session ? (
+            {status === "loading" ? (
+              <div className="hidden md:flex items-center gap-3">
+                <div className={`h-4 w-20 rounded animate-pulse ${textOnBg ? "bg-white/20" : "bg-gray-200"}`} />
+              </div>
+            ) : session ? (
               <div className="hidden md:flex items-center gap-3">
                 <span className={`text-sm transition-colors duration-300 ${
                   textOnBg ? "text-white/60" : "text-[#78716C]"
@@ -205,7 +209,7 @@ export function Navbar() {
             >
               Catalog
             </Link>
-            {session && (
+            {status !== "loading" && session && (
               <Link
                 href="/orders"
                 className="block px-4 py-3 text-sm font-medium text-[#44403C] hover:text-[#064E3B] hover:bg-[#064E3B]/5 rounded-xl transition-all duration-200"
@@ -214,7 +218,7 @@ export function Navbar() {
                 My Orders
               </Link>
             )}
-            {isAdmin && (
+            {status !== "loading" && isAdmin && (
               <Link
                 href="/admin"
                 className="block px-4 py-3 text-sm font-medium text-[#44403C] hover:text-[#064E3B] hover:bg-[#064E3B]/5 rounded-xl transition-all duration-200"
@@ -224,7 +228,11 @@ export function Navbar() {
               </Link>
             )}
             <div className="divider-gradient my-2" />
-            {session ? (
+            {status === "loading" ? (
+              <div className="px-4 py-3">
+                <div className="h-4 w-24 rounded animate-pulse bg-gray-200" />
+              </div>
+            ) : session ? (
               <button
                 onClick={() => signOut({ callbackUrl: "/" })}
                 className="block w-full text-left px-4 py-3 text-sm text-red-500 hover:bg-red-50 rounded-xl transition-all duration-200"
