@@ -16,10 +16,15 @@ export default async function HomePage() {
   });
 
   // Fetch hero video URL from site settings
-  const settings = await prisma.siteSettings.findUnique({
-    where: { id: "default" },
-  });
-  const heroVideoUrl = settings?.heroVideo || "";
+  let heroVideoUrl = "";
+  try {
+    const settings = await prisma.siteSettings.findUnique({
+      where: { id: "default" },
+    });
+    heroVideoUrl = settings?.heroVideo || "";
+  } catch {
+    // SiteSettings table may not exist yet — gracefully fall back
+  }
 
   return (
     <div className="overflow-hidden">
