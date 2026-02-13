@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { FileUpload } from "@/components/file-upload";
 
 export default function AdminSettingsPage() {
   const [heroVideo, setHeroVideo] = useState("");
@@ -8,12 +9,18 @@ export default function AdminSettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [inputMode, setInputMode] = useState<"upload" | "url">("upload");
 
   useEffect(() => {
     fetch("/api/settings")
       .then((r) => r.json())
       .then((data) => {
-        setHeroVideo(data.heroVideo || "");
+        const video = data.heroVideo || "";
+        setHeroVideo(video);
+        // If existing URL is external, default to URL mode
+        if (video && !video.startsWith("/uploads/")) {
+          setInputMode("url");
+        }
         setLoading(false);
       })
       .catch(() => {
@@ -90,33 +97,62 @@ export default function AdminSettingsPage() {
             Hero Video
           </h2>
           <p className="text-sm text-[#78716C] mb-4">
-            Paste a direct URL to an .mp4 video file. This video plays behind
-            the hero text on the homepage. Leave blank to use the default
-            gradient background.
+            Upload a video or paste a URL. This video plays behind the hero text
+            on the homepage. Leave empty to use the default gradient background.
           </p>
 
-          <label
-            htmlFor="heroVideo"
-            className="block text-sm font-medium text-[#44403C] mb-2"
-          >
-            Video URL
-          </label>
-          <input
-            id="heroVideo"
-            type="url"
-            value={heroVideo}
-            onChange={(e) => setHeroVideo(e.target.value)}
-            placeholder="https://example.com/video.mp4"
-            className="w-full px-4 py-3 bg-[#FAFAF7] rounded-2xl input-glow text-[#1A1A1A] text-sm placeholder:text-[#A8A29E]"
-          />
-          <p className="text-xs text-[#A8A29E] mt-2">
-            Supported formats: .mp4 (recommended), .webm. Use a CDN-hosted
-            video for best performance.
-          </p>
+          {/* Upload / URL toggle */}
+          <div className="flex gap-2 mb-4">
+            <button
+              type="button"
+              onClick={() => setInputMode("upload")}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                inputMode === "upload"
+                  ? "bg-green-600 text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              Upload File
+            </button>
+            <button
+              type="button"
+              onClick={() => setInputMode("url")}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                inputMode === "url"
+                  ? "bg-green-600 text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              Paste URL
+            </button>
+          </div>
+
+          {inputMode === "upload" ? (
+            <FileUpload
+              accept="video"
+              currentUrl={heroVideo && heroVideo.startsWith("/uploads/") ? heroVideo : null}
+              onUpload={(url) => setHeroVideo(url)}
+              onRemove={() => setHeroVideo("")}
+            />
+          ) : (
+            <div>
+              <input
+                id="heroVideo"
+                type="url"
+                value={heroVideo}
+                onChange={(e) => setHeroVideo(e.target.value)}
+                placeholder="https://example.com/video.mp4"
+                className="w-full px-4 py-3 bg-[#FAFAF7] rounded-2xl input-glow text-[#1A1A1A] text-sm placeholder:text-[#A8A29E]"
+              />
+              <p className="text-xs text-[#A8A29E] mt-2">
+                Supported formats: .mp4 (recommended), .webm
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Preview */}
-        {heroVideo && (
+        {heroVideo && inputMode === "url" && (
           <div>
             <h3 className="text-sm font-medium text-[#44403C] mb-2">
               Preview

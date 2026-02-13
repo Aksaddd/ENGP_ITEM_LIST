@@ -3,11 +3,13 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
+import { FileUpload } from "@/components/file-upload";
 
 export default function NewProductPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -18,7 +20,7 @@ export default function NewProductPage() {
     const data = {
       name: formData.get("name") as string,
       description: formData.get("description") as string,
-      imageUrl: formData.get("imageUrl") as string,
+      imageUrl,
       batch: formData.get("batch") as string,
       batchGrade: formData.get("batchGrade") as string,
       price: parseFloat(formData.get("price") as string),
@@ -100,15 +102,13 @@ export default function NewProductPage() {
           </div>
 
           <div>
-            <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700 mb-1">
-              Image URL
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Product Image
             </label>
-            <input
-              id="imageUrl"
-              name="imageUrl"
-              type="url"
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none text-gray-900"
-              placeholder="https://example.com/image.jpg"
+            <FileUpload
+              accept="image"
+              onUpload={(url) => setImageUrl(url)}
+              onRemove={() => setImageUrl("")}
             />
           </div>
 

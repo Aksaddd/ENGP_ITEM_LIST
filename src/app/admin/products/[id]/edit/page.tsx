@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { FileUpload } from "@/components/file-upload";
 
 interface Product {
   id: string;
@@ -26,12 +27,15 @@ export default function EditProductPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const fetchProduct = useCallback(async () => {
     try {
       const res = await fetch(`/api/products/${id}`);
       if (res.ok) {
-        setProduct(await res.json());
+        const data = await res.json();
+        setProduct(data);
+        setImageUrl(data.imageUrl || "");
       }
     } catch {
       // ignore
@@ -52,7 +56,7 @@ export default function EditProductPage() {
     const data = {
       name: formData.get("name") as string,
       description: formData.get("description") as string,
-      imageUrl: formData.get("imageUrl") as string,
+      imageUrl,
       batch: formData.get("batch") as string,
       batchGrade: formData.get("batchGrade") as string,
       price: parseFloat(formData.get("price") as string),
@@ -147,9 +151,13 @@ export default function EditProductPage() {
           </div>
 
           <div>
-            <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
-            <input id="imageUrl" name="imageUrl" type="url" defaultValue={product.imageUrl || ""}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none text-gray-900" />
+            <label className="block text-sm font-medium text-gray-700 mb-1">Product Image</label>
+            <FileUpload
+              accept="image"
+              currentUrl={imageUrl || null}
+              onUpload={(url) => setImageUrl(url)}
+              onRemove={() => setImageUrl("")}
+            />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

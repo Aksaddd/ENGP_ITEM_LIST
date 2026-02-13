@@ -46,3 +46,7 @@ next-env.d.ts
 dev.db
 dev.db-journal
 RESEARCH.md
+
+# uploaded files (keep the directory, ignore contents)
+/public/uploads/images/
+/public/uploads/videos/
